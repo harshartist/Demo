@@ -53,10 +53,10 @@ public class BillController {
 	
 	
 	@GetMapping(value="/api/v1/bill/id/{id}", produces = "application/json")
-	public BillModel getBillById(@PathVariable ("id") long id) {
+	public Optional<BillModel> getBillById(@PathVariable ("id") long id) {
 		
 		Optional<BillModel>model=repo.findById(id);
-		return null;
+		return model;
 		
 	}
 
