@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("/api/v1/")
 public class BillController {
@@ -22,14 +23,14 @@ public class BillController {
 	@Autowired
 	BillRepository repo;
 	
-	@GetMapping("/api/v1/bill")
+	@GetMapping(value="/api/v1/bill", produces = "application/json")
 	public List<BillModel> getAllBills() {
 		List<BillModel> billList= new ArrayList<>();
 		billList= repo.findAll();
 		return billList;
 	}
 	
-	@PostMapping("/api/v1/bill")
+	@PostMapping(value="/api/v1/bill", produces = "application/json")
 	@Transactional
 	public BillModel createNewBill(@RequestBody BillModel billModel) 
 	{
@@ -39,14 +40,24 @@ public class BillController {
 	
 	@DeleteMapping("/api/v1/bill/{id}")
 	@Transactional
-	public void deleteBillModel(@PathVariable long id) {
-		repo.deleteById((int) id);
+	public void deleteBillModel(@PathVariable("id") long id) {
+		repo.deleteById(id);
 		
 	}
-	@GetMapping("/api/v1/bill/name/{name}")
-	public BillModel getBillByName(String name) {
-		
+	
+	
+	@GetMapping(value="/api/v1/bill/name/{name}", produces = "application/json")
+	public BillModel getBillByName(@PathVariable("name") String name) {
 		return null;
+	}
+	
+	
+	@GetMapping(value="/api/v1/bill/id/{id}", produces = "application/json")
+	public BillModel getBillById(@PathVariable ("id") long id) {
+		
+		Optional<BillModel>model=repo.findById(id);
+		return null;
+		
 	}
 
 }
